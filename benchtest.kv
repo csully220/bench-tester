@@ -1,0 +1,218 @@
+#:kivy 1.10
+
+<ModeCheckBox@CheckBox>:
+	active: True
+	disabled: True
+
+<PinLabelText@TextInput>:
+	multiline: False
+
+<OutputCheckBox@CheckBox>:
+	disabled: True
+	active: False
+	
+<CtrlPanel>:
+	
+	BoxLayout:
+		padding: 10
+		orientation: 'vertical'
+		
+		Label:
+			text: 'Firmata Bench Tester'
+			font_size: '36sp'
+			size_hint: (1.0, 0.16)
+			
+		Label:
+			id: con_stat_lbl
+			text: root.connected
+			font_size: '14sp'
+			size_hint: (1.0, 0.1)
+			
+		AnchorLayout:
+			size_hint: (1.0, 0.1)
+			
+			BoxLayout:
+				size_hint: (0.6, 1.0)
+				Button:
+					id: con_btn
+					text: 'Connect'
+					font_size: '14sp'
+					on_press: root.pyfirmata_connect()
+				Button:
+					id: discon_btn
+					text: 'Disconnect'
+					font_size: '14sp'
+					on_press: root.pyfirmata_disconnect()
+				Button:
+					id: update_btn
+					text: 'Update Inputs'
+					font_size: '14sp'
+					on_press: root.set_update_flag()	
+		BoxLayout:
+			id: columns
+			padding: 10
+			orientation: 'horizontal'
+			
+			BoxLayout:
+				id: col_pin_modes
+				padding: 10
+				orientation: 'vertical'
+				size_hint_x: 0.6
+				Label:
+					text: 'Mode: INPUT'
+					font_size: '18sp'
+				ModeCheckBox:
+					id: pin2_mode_di
+					on_active: root.set_modes()
+				ModeCheckBox:
+					id: pin3_mode_di
+					on_active: root.set_modes()
+				ModeCheckBox:
+					id: pin4_mode_di
+					on_active: root.set_modes()
+				ModeCheckBox:
+					id: pin5_mode_di
+					on_active: root.set_modes()
+				ModeCheckBox:
+					id: pin6_mode_di
+					on_active: root.set_modes()
+				ModeCheckBox:
+					id: pin7_mode_di
+					on_active: root.set_modes()
+				ModeCheckBox:
+					id: pin8_mode_di
+					on_active: root.set_modes()
+				ModeCheckBox:
+					id: pin9_mode_di
+					on_active: root.set_modes()
+				ModeCheckBox:
+					id: pin10_mode_di
+					on_active: root.set_modes()
+				ModeCheckBox:
+					id: pin11_mode_di
+					on_active: root.set_modes()
+				ModeCheckBox:
+					id: pin12_mode_di
+					on_active: root.set_modes()
+				ModeCheckBox:
+					id: pin13_mode_di
+					on_active: root.set_modes()
+					
+			BoxLayout:
+				padding: 10
+				orientation: 'vertical'
+				Label:
+					text: 'Label'
+					font_size: '18sp'
+				PinLabelText:
+					text: 'Pin 2'
+				PinLabelText:
+					text: 'Pin 3'
+				PinLabelText:
+					text: 'Pin 4'
+				PinLabelText:
+					text: 'Pin 5'
+				PinLabelText:
+					text: 'Pin 6'
+				PinLabelText:
+					text: 'Pin 7'
+				PinLabelText:
+					text: 'Pin 8'
+				PinLabelText:
+					text: 'Pin 9'
+				PinLabelText:
+					text: 'Pin 10'
+				PinLabelText:
+					text: 'Pin 11'
+				PinLabelText:
+					text: 'Pin 12'
+				PinLabelText:
+					text: 'Pin 13'
+
+			BoxLayout:
+				id: col_pin_stats
+				padding: 10
+				orientation: 'vertical'
+				Label:
+					text: 'State'
+					font_size: '18sp'
+				Label:
+					id: pin2_state
+					text: '0'
+				Label:
+					id: pin3_state
+					text: '0'
+				Label:
+					id: pin4_state
+					text: '0'
+				Label:
+					id: pin5_state
+					text: '0'
+				Label:
+					id: pin6_state
+					text: '0'
+				Label:
+					id: pin7_state
+					text: '0'
+				Label:
+					id: pin8_state
+					text: '0'
+				Label:
+					id: pin9_state
+					text: '0'
+				Label:
+					id: pin10_state
+					text: '0'
+				Label:
+					id: pin11_state
+					text: '0'
+				Label:
+					id: pin12_state
+					text: '0'
+				Label:
+					id: pin13_state
+					text: '0'
+					
+			BoxLayout:
+				id: col_pin_output
+				padding: 10
+				orientation: 'vertical'
+				Label:
+					text: 'Output'
+					font_size: '18sp'
+				OutputCheckBox:
+					id: pin2_do
+					on_active: root.set_outputs()
+				OutputCheckBox:
+					id: pin3_do
+					on_active: root.set_outputs()
+				OutputCheckBox:
+					id: pin4_do
+					on_active: root.set_outputs()
+				OutputCheckBox:
+					id: pin5_do
+					on_active: root.set_outputs()
+				OutputCheckBox:
+					id: pin6_do
+					on_active: root.set_outputs()
+				OutputCheckBox:
+					id: pin7_do
+					on_active: root.set_outputs()
+				OutputCheckBox:
+					id: pin8_do
+					on_active: root.set_outputs()
+				OutputCheckBox:
+					id: pin9_do
+					on_active: root.set_outputs()
+				OutputCheckBox:
+					id: pin10_do
+					on_active: root.set_outputs()
+				OutputCheckBox:
+					id: pin11_do
+					on_active: root.set_outputs()
+				OutputCheckBox:
+					id: pin12_do
+					on_active: root.set_outputs()
+				OutputCheckBox:
+					id: pin13_do
+					on_active: root.set_outputs()
