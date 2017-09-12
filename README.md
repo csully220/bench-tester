@@ -6,3 +6,6 @@ Requires kivy and pyfirmata Python modules
 Upload Standard Firmata to Arduino Uno.
 
 Currently only supports the Uno. DIGITAL INPUT state values are inverted for pullup mode. Internal pullups do not work in Firmata.
+
+Edit file for test push to Github
+
