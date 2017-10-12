@@ -60,7 +60,6 @@ class CtrlPanel(BoxLayout):
     uno = ArduinoUnoHandler()
     connected = 'Disconnected'
     update_inputs_flag = False
-    #pin_labels[ObjectProperty() for range(12)]
 
     def pyfirmata_connect(self):
         self.ids['con_stat_lbl'].text = 'Connecting...'
@@ -76,7 +75,7 @@ class CtrlPanel(BoxLayout):
 
     def pyfirmata_disconnect(self):
         self.ids['con_stat_lbl'].text = 'Disconnecting...'
-        #Clock.unschedule(self.pyfirmata_update)
+        Clock.unschedule(self.pyfirmata_update)
         if self.uno.disconnect():
             self.ids['con_stat_lbl'].text = self.uno.connected
             self.ids['con_btn'].disabled = False

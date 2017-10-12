@@ -16,7 +16,7 @@
 	BoxLayout:
 		padding: 10
 		orientation: 'vertical'
-		
+		color
 		Label:
 			text: 'Firmata Bench Tester'
 			font_size: '36sp'
@@ -47,7 +47,7 @@
 					id: update_btn
 					text: 'Update Inputs'
 					font_size: '14sp'
-					on_press: root.set_update_flag()	
+					on_press: root.set_update_flag()
 		BoxLayout:
 			id: columns
 			padding: 10
@@ -59,7 +59,7 @@
 				orientation: 'vertical'
 				size_hint_x: 0.6
 				Label:
-					text: 'Mode: INPUT'
+					text: 'INPUT'
 					font_size: '18sp'
 				ModeCheckBox:
 					id: pin2_mode_di
@@ -102,8 +102,41 @@
 				padding: 10
 				orientation: 'vertical'
 				Label:
+					text: 'Pin'
+					font_size: '18sp'
+				Label:
+					text: '1'
+				Label:
+					text: '2'
+				Label:
+					text: '3'
+				Label:
+					text: '4'
+				Label:
+					text: '5'
+				Label:
+					text: '6'
+				Label:
+					text: '7'
+				Label:
+					text: '8'
+				Label:
+					text: '9'
+				Label:
+					text: '10'
+				Label:
+					text: '11'
+				Label:
+					text: '12'		
+					
+			BoxLayout:
+				padding: 10
+				orientation: 'vertical'
+				Label:
 					text: 'Label'
 					font_size: '18sp'
+				PinLabelText:
+					text: 'Pin 1'
 				PinLabelText:
 					text: 'Pin 2'
 				PinLabelText:
@@ -126,8 +159,6 @@
 					text: 'Pin 11'
 				PinLabelText:
 					text: 'Pin 12'
-				PinLabelText:
-					text: 'Pin 13'
 
 			BoxLayout:
 				id: col_pin_stats
