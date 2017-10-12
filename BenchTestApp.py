@@ -13,7 +13,10 @@ from kivy.clock import Clock
 
 
 class ArduinoUnoHandler:
+
+    #Change the port to match your own setup (e.g. COM1, /dev/ttyACM0, etc.)
     port = 'COM4'
+    
     board = None
     connected = 'Disconnected'
     di_states = ['0' for i in range(12)]
@@ -26,6 +29,8 @@ class ArduinoUnoHandler:
             thread.start()
             for i in range(12):
                 self.board.digital[i+2].mode = 0
+            for i in range(6):
+                self.board.analog[i].enable_reporting()
             self.connected = 'Connected'
             return True
         except:
@@ -52,9 +57,11 @@ class ArduinoUnoHandler:
             self.board.digital[pin].write(val)
 
     def set_mode(self, pin, mode):
-            self.board.digital[pin].mode = mode
+        self.board.digital[pin].mode = mode
 
-
+    def get_analog(self, pin):
+        return self.board.analog[pin].read()
+        
 
 class CtrlPanel(BoxLayout):
     uno = ArduinoUnoHandler()
@@ -111,6 +118,9 @@ class CtrlPanel(BoxLayout):
                 pin = i+2
                 if self.uno.board.digital[pin].mode == 0:
                     self.ids['pin' + str(pin) + '_state'].text = str(self.uno.get_digital(pin))
+            for i in range(6):
+                pin = i
+                self.ids['pinA' + str(pin) + '_val'].text = str(self.uno.get_analog(pin))
 
     def set_update_flag(self):
         if self.update_inputs_flag == False:
