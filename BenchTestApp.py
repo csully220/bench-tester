@@ -1,5 +1,9 @@
 from pyfirmata import Arduino, util
+import logging
+import time
+
 import kivy
+
 kivy.require('1.10.0') # replace with your current kivy version !
 
 from kivy.app import App
@@ -67,7 +71,18 @@ class CtrlPanel(BoxLayout):
     uno = ArduinoUnoHandler()
     connected = 'Disconnected'
     update_inputs_flag = False
-
+    anal_visible = True
+    #LOG_FILENAME = 'save_file.txt'
+    logger = logging.getLogger()
+    
+    def setup_logger(self):
+        handler = logging.FileHandler('save_file.txt')
+        formatter = logging.Formatter('%(message)s')
+        handler.setFormatter(formatter)
+        self.logger.addHandler(handler)
+        self.logger.setLevel(logging.INFO)
+        self.logger.debug('often makes a very good meal of %s', 'visiting tourists')
+    
     def pyfirmata_connect(self):
         self.ids['con_stat_lbl'].text = 'Connecting...'
         Clock.schedule_interval(self.pyfirmata_update, 0.1)
@@ -130,12 +145,36 @@ class CtrlPanel(BoxLayout):
             self.update_inputs_flag = False
             self.ids['update_btn'].text = 'Update Inputs'            
 
+    def hide_anal(self):
+        self.anal_visible = not self.anal_visible
+        if(self.anal_visible):
+            self.ids['anal_layout'].size_hint_x = 0.3
+            self.ids['anal_layout'].padding = 10
+            self.ids['anal_layout_lbl'].size_hint_y = 0.1
+            self.ids['hide_anal_btn'].text = 'Hide Analog'
+        else:
+            self.ids['anal_layout'].size_hint_x = 0
+            self.ids['anal_layout'].padding = 0
+            self.ids['anal_layout_lbl'].size_hint_y = 0
+            self.ids['hide_anal_btn'].text = 'Show Analog'
+
+    def save_lbls(self):
+        self.ids['save_btn'].disabled = True
+        for i in range(12):
+            self.logger.info(self.ids['desc' + str(i+1)].text)
+            self.ids['save_btn'].disabled = True
+            time.sleep(0.2)
+        self.ids['save_btn'].disabled = False
+
     def build(self):
         pass
 
 class BenchTestApp(App):
     def build(self):
-        return CtrlPanel()
+        cp = CtrlPanel()
+        cp.setup_logger()
+        return cp
+
 
 if __name__ == '__main__':
     BenchTestApp().run()

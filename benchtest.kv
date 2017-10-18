@@ -48,10 +48,16 @@
 					font_size: '14sp'
 					on_press: root.set_update_flag()
 				Button:
-					id: show_anal_btn
-					text: 'Show Analog'
+					id: save_btn
+					text: 'Save Pin Desc'
 					font_size: '14sp'
-				
+					on_press: root.save_lbls()
+					
+				Button:
+					id: hide_anal_btn
+					text: 'Hide Analog'
+					font_size: '14sp'
+					on_press: root.hide_anal()
 					
 		BoxLayout:
 			id: digi_anal
@@ -65,7 +71,7 @@
 					size_hint_y: 0.1
 					font_size: '18sp'
 					text: 'Digital I/O'
-					
+
 				BoxLayout:
 					id: digital_columns
 					padding: 10
@@ -74,7 +80,7 @@
 						id: col_pin_modes
 						padding: 10
 						orientation: 'vertical'
-						
+
 						Label:
 							text: 'INPUT'
 							font_size: '18sp'
@@ -114,7 +120,7 @@
 						ModeCheckBox:
 							id: pin13_mode_di
 							on_active: root.set_modes()
-							
+
 					BoxLayout:
 						padding: 10
 						orientation: 'vertical'
@@ -145,7 +151,7 @@
 							text: '11'
 						Label:
 							text: '12'		
-							
+
 					BoxLayout:
 						padding: 10
 						orientation: 'vertical'
@@ -154,30 +160,42 @@
 							text: 'Description'
 							font_size: '18sp'
 						PinLabelText:
+							id: desc1
 							text: 'Pin 1'
 						PinLabelText:
+							id: desc2
 							text: 'Pin 2'
 						PinLabelText:
+							id: desc3
 							text: 'Pin 3'
 						PinLabelText:
+							id: desc4
 							text: 'Pin 4'
 						PinLabelText:
+							id: desc5
 							text: 'Pin 5'
 						PinLabelText:
+							id: desc6
 							text: 'Pin 6'
 						PinLabelText:
+							id: desc7
 							text: 'Pin 7'
 						PinLabelText:
+							id: desc8
 							text: 'Pin 8'
 						PinLabelText:
+							id: desc9
 							text: 'Pin 9'
 						PinLabelText:
+							id: desc10
 							text: 'Pin 10'
 						PinLabelText:
+							id: desc11
 							text: 'Pin 11'
 						PinLabelText:
+							id: desc12
 							text: 'Pin 12'
-		
+
 					BoxLayout:
 						id: col_pin_stats
 						padding: 10
@@ -221,7 +239,7 @@
 						Label:
 							id: pin13_state
 							text: 'False'
-							
+
 					BoxLayout:
 						id: col_pin_output
 						padding: 10
@@ -266,21 +284,22 @@
 							id: pin13_do
 							on_active: root.set_outputs()
 
-							
 			BoxLayout:
+				id: anal_layout
 				padding: 10
 				orientation: 'vertical'
 				size_hint_x: 0.3
 				Label:
+				    id: anal_layout_lbl
 					size_hint_y: 0.1
 					font_size: '18sp'
 					text: 'Analog Inputs'
-					
+
 				BoxLayout:
 					id: analog_columns
 					padding: 10
 					orientation: 'horizontal'
-	
+
 					BoxLayout:
 						id: col_pin_modes
 						padding: 10
@@ -306,7 +325,7 @@
 						Label:
 							text: '19'
 							font_size: '14sp'
-							
+
 					BoxLayout:
 						id: col_pin_modes
 						padding: 10
