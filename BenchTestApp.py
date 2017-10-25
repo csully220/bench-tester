@@ -1,7 +1,7 @@
 from pyfirmata import Arduino, util
 import logging
 import time
-
+import datetime
 import kivy
 
 kivy.require('1.10.0') # replace with your current kivy version !
@@ -20,7 +20,7 @@ class ArduinoUnoHandler:
 
     #Change the port to match your own setup (e.g. COM1, /dev/ttyACM0, etc.)
     port = 'COM4'
-    
+
     board = None
     connected = 'Disconnected'
     di_states = ['0' for i in range(12)]
@@ -65,24 +65,15 @@ class ArduinoUnoHandler:
 
     def get_analog(self, pin):
         return self.board.analog[pin].read()
-        
+
 
 class CtrlPanel(BoxLayout):
     uno = ArduinoUnoHandler()
-    connected = 'Disconnected'
     update_inputs_flag = False
+    connected = 'Disconnected'
     anal_visible = True
-    #LOG_FILENAME = 'save_file.txt'
-    logger = logging.getLogger()
-    
-    def setup_logger(self):
-        handler = logging.FileHandler('save_file.txt')
-        formatter = logging.Formatter('%(message)s')
-        handler.setFormatter(formatter)
-        self.logger.addHandler(handler)
-        self.logger.setLevel(logging.INFO)
-        self.logger.debug('often makes a very good meal of %s', 'visiting tourists')
-    
+    logging.basicConfig(filename='log.txt',level=logging.DEBUG)
+
     def pyfirmata_connect(self):
         self.ids['con_stat_lbl'].text = 'Connecting...'
         Clock.schedule_interval(self.pyfirmata_update, 0.1)
@@ -160,10 +151,14 @@ class CtrlPanel(BoxLayout):
 
     def save_lbls(self):
         self.ids['save_btn'].disabled = True
+        ts = '{:%Y-%m-%d %H-%M-%S}'.format(datetime.datetime.now())
+        fo = open('pin_descriptions-' + ts + '.txt', 'a')
+        fo.write('PIN DESCRIPTIONS\n')
         for i in range(12):
-            self.logger.info(self.ids['desc' + str(i+1)].text)
+            fo.write(self.ids['desc' + str(i+1)].text + '\n')
             self.ids['save_btn'].disabled = True
-            time.sleep(0.2)
+        fo.close()
+        time.sleep(0.2)
         self.ids['save_btn'].disabled = False
 
     def build(self):
@@ -172,9 +167,7 @@ class CtrlPanel(BoxLayout):
 class BenchTestApp(App):
     def build(self):
         cp = CtrlPanel()
-        cp.setup_logger()
         return cp
-
 
 if __name__ == '__main__':
     BenchTestApp().run()
