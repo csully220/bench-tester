@@ -2,10 +2,10 @@ from pyfirmata import Arduino, util
 import logging
 import time
 import datetime
+from functools import partial
+
 import kivy
-
 kivy.require('1.10.0') # replace with your current kivy version !
-
 from kivy.app import App
 from kivy.uix.label import Label
 from kivy.uix.button import Button
@@ -13,22 +13,20 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.checkbox import CheckBox
 from kivy.uix.textinput import TextInput
 from kivy.properties import ObjectProperty
+from kivy.uix.popup import Popup
 from kivy.clock import Clock
 
 
 class ArduinoUnoHandler:
 
-    #Change the port to match your own setup (e.g. COM1, /dev/ttyACM0, etc.)
-    port = 'COM4'
-
     board = None
     connected = 'Disconnected'
     di_states = ['0' for i in range(12)]
     thread = None
-
-    def connect(self):
+        
+    def connect(self, com_port):
         try:
-            self.board = Arduino(self.port)
+            self.board = Arduino(com_port)
             thread = util.Iterator(self.board)
             thread.start()
             for i in range(12):
@@ -69,6 +67,7 @@ class ArduinoUnoHandler:
 
 class CtrlPanel(BoxLayout):
     uno = ArduinoUnoHandler()
+    com_port = 'COM4'
     update_inputs_flag = False
     connected = 'Disconnected'
     anal_visible = True
@@ -77,7 +76,8 @@ class CtrlPanel(BoxLayout):
     def pyfirmata_connect(self):
         self.ids['con_stat_lbl'].text = 'Connecting...'
         Clock.schedule_interval(self.pyfirmata_update, 0.1)
-        if self.uno.connect():
+        self.com_port = self.ids['port_txt'].text
+        if self.uno.connect(self.com_port):
             self.ids['con_stat_lbl'].text = self.uno.connected
             self.ids['con_btn'].disabled = True
             for i in range(12):
@@ -131,10 +131,10 @@ class CtrlPanel(BoxLayout):
     def set_update_flag(self):
         if self.update_inputs_flag == False:
             self.update_inputs_flag = True
-            self.ids['update_btn'].text = 'Stop Updating Inputs'
+            self.ids['update_btn'].text = 'Stop'
         elif self.update_inputs_flag == True:
             self.update_inputs_flag = False
-            self.ids['update_btn'].text = 'Update Inputs'            
+            self.ids['update_btn'].text = 'Read Inputs'
 
     def hide_anal(self):
         self.anal_visible = not self.anal_visible
